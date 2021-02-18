@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 namespace FunctionUnitTesting.Services
 {
 
-    public class DbContext : IContext
+    public class CacheContext : IContext
     {
         private Dictionary<string, Record> _records;
 
-        public DbContext()
+        public CacheContext()
         {
             _records = new Dictionary<string, Record>();
             _records.Add("1", new Record { Id = "1", Name = $"Alpha" });

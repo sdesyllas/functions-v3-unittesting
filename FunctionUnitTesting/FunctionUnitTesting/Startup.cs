@@ -14,7 +14,8 @@ namespace FunctionUnitTesting
             // Registering services
             builder
                 .Services
-                .AddSingleton<IDbContext, DbContext>();
+                .AddSingleton<IContext, CacheContext>()
+                .AddSingleton<ITopicService, TopicService>();
         }
     }
 }

@@ -13,11 +13,13 @@ namespace FunctionUnitTesting
 {
     public class RecordFunction
     {
-        private readonly IDbContext _dbContext;
+        private readonly IContext _dbContext;
+        private readonly ITopicService _topicService;
 
-        public RecordFunction(IDbContext dbContext)
+        public RecordFunction(IContext dbContext, ITopicService topicService)
         {
             _dbContext = dbContext;
+            _topicService = topicService;
         }
 
         [FunctionName("RecordFunction")]
@@ -26,13 +28,14 @@ namespace FunctionUnitTesting
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            
+
             var record = await _dbContext.GetRecordById(id);
+
             if (record == null)
             {
                 return new OkObjectResult($"record with id {id} not found.");
             }
-            
+            _topicService.SendMessage(record.Name);
             return new OkObjectResult(record);
         }
     }
