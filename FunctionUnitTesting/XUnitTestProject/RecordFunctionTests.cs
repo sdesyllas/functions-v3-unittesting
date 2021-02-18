@@ -28,7 +28,7 @@ namespace XUnitTestProject
 
             // Assert
             dbContext.Verify(x => x.GetRecordById("1"), Times.Once);
-            topicService.Verify(x => x.SendMessage("Name"), Times.Once);
+            topicService.Verify(x => x.SendMessage("1"), Times.Once);
             Assert.Equal(200, response.StatusCode);
             Assert.Equal("1", ((FunctionUnitTesting.Domain.Record)response.Value).Id);
             Assert.Equal("Name", ((FunctionUnitTesting.Domain.Record)response.Value).Name);
@@ -38,9 +38,9 @@ namespace XUnitTestProject
         public async void Http_trigger_Get_should_return_not_found_for_notexisting_record_id()
         {
             Mock<IContext> idbContext = new Mock<IContext>();
-
-            idbContext.Setup(x => x.GetRecordById(It.IsAny<string>())).ReturnsAsync(value: null);
             Mock<ITopicService> topicService = new Mock<ITopicService>();
+            idbContext.Setup(x => x.GetRecordById(It.IsAny<string>())).ReturnsAsync(value: null);
+            
             var logger = TestFactory.CreateLogger();
             var request = TestFactory.CreateHttpRequest();
             RecordFunction recordFunction = new RecordFunction(idbContext.Object, topicService.Object);
