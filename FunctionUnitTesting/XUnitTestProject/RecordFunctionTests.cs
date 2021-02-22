@@ -40,19 +40,12 @@ namespace XUnitTestProject
             // Arrange
             Mock<IContext> idbContext = new Mock<IContext>();
             Mock<ITopicService> topicService = new Mock<ITopicService>();
-            idbContext.Setup(x => x.GetRecordById(It.IsAny<string>())).ReturnsAsync(value: null);
             
-            var logger = TestFactory.CreateLogger();
-            var request = TestFactory.CreateHttpRequest();
-            RecordFunction recordFunction = new RecordFunction(idbContext.Object, topicService.Object);
-
             // Act
-            var response = (ObjectResult)await recordFunction.Run(request, "11", logger);
+            
 
             // Assert
-            idbContext.Verify(x => x.GetRecordById("11"), Times.Once);
-            topicService.Verify(x => x.SendMessage(It.IsAny<string>()), Times.Never);
-            Assert.Equal(404, response.StatusCode);
+            
         }
     }
 }

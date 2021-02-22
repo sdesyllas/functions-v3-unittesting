@@ -28,14 +28,7 @@ namespace FunctionUnitTesting
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
-            var record = await _dbContext.GetRecordById(id);
-            _topicService.SendMessage(id);
-            if (record == null)
-            {
-                return new OkObjectResult($"record with id {id} not found.");
-            }
-            _topicService.SendMessage(record.Name);
+            var record = new Domain.Record();
             return new OkObjectResult(record);
         }
     }
