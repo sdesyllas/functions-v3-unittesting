@@ -38,8 +38,7 @@ namespace XUnitTestProject
         public async void Http_trigger_Get_should_return_not_found_for_notexisting_record_id()
         {
             // Arrange
-            Mock<IContext> idbContext = new Mock<IContext>();
-            Mock<ITopicService> topicService = new Mock<ITopicService>();
+
             
             // Act
             
